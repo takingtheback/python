@@ -107,80 +107,17 @@ while True:
     num = int(input('숫자를 입력하라 > '))
     print('입력한 숫자: ', num)
 
-포켓몬
-피카츄
-hp = 30
-exp = 0
-lv = 1
+break 문
+루프 빠져나감
 
-메뉴
-1 밥먹기 > 피카츄 밥먹음. hp 5 증가
-2 잠자기 > 피카츄 잠. hp 10 증가
-3 운동하기 > 피카츄 운동함. hp -15 감소 exp 10 증가
-4 놀기 > 피카츄 놀러감. hp -10 감소 exp 5 증가
-5 상태확인 > hp exp lv
-6 종료 >  sys.exit(0)
-
-lv : exp 30 마다 1 증가
-hp가 0 이하이면 케릭터 사망 : 게임종료
-
+continue문
+continue문 뒤의 문장을 실행하지 않고 다름 루프 진행
 '''
-
-import sys
-
-hp = 30
-exp = 0
-lv = 1
-while True:
-    menu = int(input('1. 밥먹기 2. 잠자기 3. 운동하기 4. 놀기 5. 상태확인 6. 종료 > '))
-    if menu == 1:
-        print('피카츄가 밥을 먹고, hp 가 5 회복되었다.')
-        hp = hp + 5
-        if hp > 30:
-            hp = 30
-        print('피카츄 lv: ',lv, ', hp: ',hp, ', exp: ',exp)
-    if menu == 2:
-        print('피카츄 잠을 자고, hp 가 10 회복되었다.')
-        hp = hp + 10
-        if hp > 30:
-            hp = 30
-        print('피카츄 lv: ', lv, ', hp: ', hp, ', exp: ', exp)
-    if menu == 3:
-        print('피카츄가 운동을 하고, hp 가 15 감소되었다.')
-        print('exp 를 10 획득하였다.')
-        hp = hp - 15
-        exp = exp + 10
-        print('피카츄 lv: ', lv, ', hp: ', hp, ', exp: ', exp)
-        if hp <= 0:
-            print('피카츄가 죽었다. 시스템을 종료합니다.')
-            sys.exit(0)
-
-        if exp >= 30:
-            lv = lv + 1
-            exp= exp - 30
-            print('피카츄 레벨업!',' 레벨이',lv,'가 되었다.')
-
-    if menu == 4:
-        print('피카츄가 놀러가서, hp 가 10 감소되었다.')
-        print('exp 를 5 획득하였다.')
-        hp = hp - 10
-        exp = exp + 5
-        print('피카츄 lv: ', lv, ', hp: ', hp, ', exp: ', exp)
-
-        if hp <= 0:
-            print('피카츄가 죽었다. 시스템을 종료합니다.')
-            sys.exit(0)
-
-        if exp >= 30:
-            lv = lv + 1
-            exp= exp - 30
-            print('피카츄 레벨업!',' 레벨이',lv,'가 되었다.')
-
-    if menu == 5:
-        print('피카츄 상태')
-        print('lv', lv)
-        print('hp',hp)
-        print('exp',exp)
-
-    if menu == 6:
-        sys.exit(0)
+# 1- 10 사이의 짝수 출력
+for i in range(1, 11):
+    if i%2 == 1:
+        continue
+    print(i, end=', ')  # end:출력시 마지막 출력값. 기본값은 \n
+print()
+for i in range(2, 11, 2):
+    print(i, end=', ')
