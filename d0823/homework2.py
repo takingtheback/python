@@ -43,11 +43,15 @@ while True:
         print(' 추가하려는 사람의 이름, 번호, 주소를 입력하세요.')
 
         name = input('이름 : ')
-        tel = input('번호 : ')
-        add = input('주소 : ')
-
-        addr.append({'name':name, 'tel':tel,'add':add})
-        print()
+        for i in range(0, len(addr)):
+            if (addr[i]['name'] == name):
+                print(' 추가하려는 사람의 이름이 중복됩니다. 다른 이름을 선택해주세요.')
+                break
+            else:
+                tel = input('번호 : ')
+                add = input('주소 : ')
+                addr.append({'name':name, 'tel':tel,'add':add})
+                break
 
     if menu == 2:
         print('검색하려는 사람의 이름을 입력하세요.')
