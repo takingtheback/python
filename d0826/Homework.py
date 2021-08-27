@@ -33,7 +33,7 @@ import sys
 
 
 class order:
-    def __init__(self, oNo='', oProduct='', oQuantity='', oPrice='', paid=False):
+    def __init__(self, oNo='', oProduct='', oQuantity='', oPrice='', paid='False'):
         self.oNo = oNo
         self.oProduct = oProduct
         self.oQuantity = oQuantity
@@ -69,9 +69,7 @@ class oDao:  # 저장소 작업 전담
         if old == None:
             return False
         else:
-            old.oProduct = o.oProduct
-            old.oQuantity = o.oQuantity
-            old.oPrice = o.oPrice
+            old.paid = o.paid
             return True
 
     def delete(self, oNo):
@@ -88,7 +86,6 @@ class orderService:
 
     def __init__(self):
         self.dao = oDao()
-        self.pdao = pDao()
 
     def addOrder(self):
         factoryService.printProductList(self)
@@ -118,19 +115,12 @@ class orderService:
 
     def editOrder(self):
         oNo = input('결제할 주문번호:')
-        o = self.dao.select(oNo)
-        if o == None:
-            print('없는 주문번호')
-        else:
-            o.printOrder()
-
-
-        pay = input('결제하시려면 1번 취소 2번 >')
-        if pay == '1':
-            flag = self.dao.update(order(paid=True))
+        paid = 'true'
+        flag = self.dao.update(order(oNo=oNo, paid=paid))
+        if flag:
             print('결제 완료')
         else:
-            print('결제 취소')
+            print('없는 아이디. 결제 취소됨')
 
 
     def delOrder(self):
@@ -203,9 +193,9 @@ class factoryService:
     def addProduct(self):
         p = 0
         while p != None:  # id 중복체크
-            # factoryService.pNo += 1
-            # pNo = factoryService.pNo
-            pNo = input('pNo:')
+            factoryService.pNo += 1
+            pNo = int(factoryService.pNo)
+            # pNo = input('pNo:')
             p = self.dao.select(pNo)
 
         pName = input('pName:')
@@ -216,12 +206,16 @@ class factoryService:
         self.dao.insert(p)
 
     def getProduct(self):
-        pNo = input('search pNo:')
+        pNo = int(input('검색할 제품번호:'))
         p = self.dao.select(pNo)
-        if p == None:
-            print('없는 제품번호')
-        else:
+        if p != None:
             p.printProduct()
+        else:
+            print('없는 제품번호')
+        # if p == None:
+        #     print('없는 제품번호')
+        # else:
+        #     p.printProduct()
 
     def printAll(self):
         products = self.dao.selectAll()
@@ -234,7 +228,7 @@ class factoryService:
             p.printProductList()
 
     def editProduct(self):
-        pNo = input('수정할 제품번호:')
+        pNo = int(input('수정할 제품번호:'))
         pName = input('수정할 제품명:')
         pPrice = input('수정할 가격:')
         pQuantity = input('수정할 수량:')
@@ -245,7 +239,7 @@ class factoryService:
             print('없는 아이디. 수정 취소됨')
 
     def delProduct(self):
-        pNo = input('삭제할 pNo:')
+        pNo = int(input('삭제할 제품번호:'))
         flag = self.dao.delete(pNo)
         if flag:
             print('삭제완료')
