@@ -33,7 +33,7 @@ import sys
 
 
 class order:
-    def __init__(self, oNo='', oProduct='', oQuantity='', oPrice='', paid='False'):
+    def __init__(self, oNo='', oProduct='', oQuantity='', oPrice='', paid=False):
         self.oNo = oNo
         self.oProduct = oProduct
         self.oQuantity = oQuantity
@@ -41,10 +41,10 @@ class order:
         self.paid = paid
 
     def printOrder(self):
-        print('oNo:', self.oNo)
-        print('oProduct:', self.oProduct)
-        print('oQuantity:', self.oQuantity)
-        print('oPrice:', self.oPrice)
+        print('주문번호:', self.oNo)
+        print('주문상품:', self.oProduct)
+        print('주문수량:', self.oQuantity)
+        print('금액:', self.oPrice)
         print('paid:', self.paid)
         print('___________________')
 
@@ -72,7 +72,6 @@ class oDao:  # 저장소 작업 전담
             old.oProduct = o.oProduct
             old.oQuantity = o.oQuantity
             old.oPrice = o.oPrice
-            old.oPrice = o.oPrice
             return True
 
     def delete(self, oNo):
@@ -89,8 +88,10 @@ class orderService:
 
     def __init__(self):
         self.dao = oDao()
+        self.pdao = pDao()
 
     def addOrder(self):
+        factoryService.printProductList(self)
         o = 0
         while o != None:  # id 중복체크
             oNo = input('oNo:')
@@ -123,6 +124,7 @@ class orderService:
         else:
             o.printOrder()
 
+
         pay = input('결제하시려면 1번 취소 2번 >')
         if pay == '1':
             flag = self.dao.update(order(paid=True))
@@ -153,6 +155,9 @@ class product:
         print('pPrice:', self.pPrice)
         print('pQuantity:', self.pQuantity)
         print('___________________')
+
+    def printProductList(self):
+        print('pName:', self.pName)
 
 
 class pDao:  # 저장소 작업 전담
@@ -198,11 +203,15 @@ class factoryService:
     def addProduct(self):
         p = 0
         while p != None:  # id 중복체크
+            # factoryService.pNo += 1
+            # pNo = factoryService.pNo
             pNo = input('pNo:')
             p = self.dao.select(pNo)
+
         pName = input('pName:')
         pPrice = input('pPrice:')
         pQuantity = input('pQuantity:')
+
         p = product(pNo, pName, pPrice, pQuantity)
         self.dao.insert(p)
 
@@ -219,6 +228,11 @@ class factoryService:
         for p in products:
             p.printProduct()
 
+    def printProductList(self):
+        products = self.dao.selectAll()
+        for p in products:
+            p.printProductList()
+
     def editProduct(self):
         pNo = input('수정할 제품번호:')
         pName = input('수정할 제품명:')
@@ -231,8 +245,8 @@ class factoryService:
             print('없는 아이디. 수정 취소됨')
 
     def delProduct(self):
-        factoryService.pNo = input('삭제할 pNo:')
-        flag = self.dao.delete(factoryService.pNo)
+        pNo = input('삭제할 pNo:')
+        flag = self.dao.delete(pNo)
         if flag:
             print('삭제완료')
         else:
@@ -259,9 +273,11 @@ def factory():
 
 def convenience():
     service = orderService()
+    service2 = factoryService()
     while True:
         no = input('1.주문 2.주문취소 3.주문목록 4.결제 5.종료(상위메뉴) > ')
         if no == '1':
+            service2.printAll()
             service.addOrder()
         elif no == '2':
             service.delOrder()
