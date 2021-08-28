@@ -61,6 +61,7 @@ class oDao:  # 저장소 작업 전담
             if o.oNo == oNo:
                 return o
 
+
     def selectAll(self):
         return self.orders
 
@@ -82,16 +83,16 @@ class oDao:  # 저장소 작업 전담
 
 
 class orderService:
-    pNo = 0
+    oNo = 0
 
     def __init__(self):
         self.dao = oDao()
 
     def addOrder(self):
-        factoryService.printProductList(self)
         o = 0
         while o != None:  # id 중복체크
-            oNo = input('oNo:')
+            orderService.oNo += 1
+            oNo = int(orderService.oNo)
             o = self.dao.select(oNo)
         oProduct = input('oProduct:')
         oQuantity = input('oQuantity:')
@@ -101,7 +102,7 @@ class orderService:
         self.dao.insert(o)
 
     def getOrder(self):
-        oNo = input('검색할 주문번호:')
+        oNo = int(input('검색할 주문번호:'))
         o = self.dao.select(oNo)
         if o == None:
             print('없는 주문번호')
@@ -114,7 +115,7 @@ class orderService:
             o.printOrder()
 
     def editOrder(self):
-        oNo = input('결제할 주문번호:')
+        oNo = int(input('결제할 주문번호:'))
         paid = 'true'
         flag = self.dao.update(order(oNo=oNo, paid=paid))
         if flag:
@@ -122,17 +123,19 @@ class orderService:
         else:
             print('없는 아이디. 결제 취소됨')
 
-
     def delOrder(self):
-        factoryService.oNo = input('취소할 주문번호:')
-        flag = self.dao.delete(factoryService.oNo)
+        oNo = int(input('취소할 주문번호:'))
+        flag = self.dao.delete(oNo)
+
         if flag:
-            print('주문 취소 완료')
+            print('취소 완료')
         else:
             print('없는 주문번호')
 
 
 class product:
+    No = 0
+
     def __init__(self, pNo='', pName='', pPrice='', pQuantity=''):
         self.pNo = pNo
         self.pName = pName
@@ -147,7 +150,9 @@ class product:
         print('___________________')
 
     def printProductList(self):
-        print('pName:', self.pName)
+        product.No += 1
+        pN = product.No
+        print(pN, ':', self.pName)
 
 
 class pDao:  # 저장소 작업 전담
@@ -260,18 +265,17 @@ def factory():
         elif no == '4':
             service.delProduct()
         elif no == '5':
-            service.printAll()
+            # service.printAll()
+            service.printProductList()
         elif no == '6':
             menu()
 
 
 def convenience():
     service = orderService()
-    service2 = factoryService()
     while True:
         no = input('1.주문 2.주문취소 3.주문목록 4.결제 5.종료(상위메뉴) > ')
         if no == '1':
-            service2.printAll()
             service.addOrder()
         elif no == '2':
             service.delOrder()
