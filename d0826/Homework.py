@@ -61,7 +61,6 @@ class oDao:  # 저장소 작업 전담
             if o.oNo == oNo:
                 return o
 
-
     def selectAll(self):
         return self.orders
 
