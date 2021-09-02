@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상세조회</title>
+    <script>
+        function del() {
+            flag = confirm('정말 삭제하시겠습니까?')
+            if(flag) {
+                location.href='/member/del?id={{m.getId()}}'
+            } else {
+                alert('삭제가 취소되었습니다.')
+            }
+        }
+    </script>
+</head>
+<body>
+<h3>회원상세정보</h3>
+<a href="/member/list">목록으로</a><br>
+<form action="/member/edit" method="post">
+    <table border="1">
+        <tr><th>id</th><td><input type="text" name="id" value="{{m.getId()}}" readonly></td></tr>
+        <tr><th>pwd</th><td><input type="text" name="pwd"  value="{{m.getPwd()}}"></td></tr>
+        <tr><th>name</th><td><input type="text" name="name"  value="{{m.getName()}}" readonly></td></tr>
+        <tr><th>email</th><td><input type="text" name="email"  value="{{m.getEmail()}}" readonly></td></tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="수정">
+            <input type="button" value="삭제" onclick="del()">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
