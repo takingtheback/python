@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function del(){
+            flag = confirm('정말 삭제하시겠습니까?')
+            if(flag){
+                location.href='/product/del?num={{p.num}}'
+            }else{
+                alert('삭제가 취소되었습니다')
+            }
+        }
+    </script>
+</head>
+<body>
+<h3>제품 정보</h3>
+<a href="/product/list">목록으로 되돌아가기</a><br/>
+<form action="/product/edit" method="post">
+<table border="1">
+  <tr><th>num</th><td><input type="text" name="num" value="{{p.num}}" readonly></td></tr>
+  <tr><th>name</th><td><input type="text" name="name" value="{{p.name}}" ></td></tr>
+  <tr><th>price</th><td><input type="text" name="price" value="{{p.price}}" ></td></tr>
+  <tr><th>amount</th><td><input type="text" name="amount" value="{{p.amount}}" ></td></tr>
+  <tr><td colspan="2"><input type="submit" value="수정">
+      <input type="button" value="삭제" onclick="del()"></td></tr>
+</table>
+</form>
+</body>
+</html>
