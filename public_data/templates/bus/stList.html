@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>{{routeid}}의 경유 정류소</h3>
+<table border="1">
+    <tr><th>순번</th><th>정류소 고유번호</th><th>정류소명</th><th>첫차시간</th><th>막차시간</th><th>위치X</th><th>위치Y</th></tr>
+{% for s in stList%}
+    <tr>
+        <td>{{s.seq}}</td>
+        <td>{{s.arsId}}</td>
+        <td>{{s.stationNm}}</td>
+        <td>{{s.beginTm}}</td>
+        <td>{{s.lastTm}}</td>
+        <td>{{s.gpsX}}</td>
+        <td>{{s.gpsY}}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>

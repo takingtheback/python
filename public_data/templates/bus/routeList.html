@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>{{arsId}}의 경유노선목록</h3>
+<table border="1">
+    <tr>
+        <th>노선ID</th><th>노선명</th><th>노선길이</th><th>노선유형</th><th>기점</th><th>종점</th><th>배차간격</th>
+        <th>금일첫차시간</th><th>금일막차시간</th>
+    </tr>
+{% for s in stList%}
+    <tr>
+        <td>{{s.busRouteId}}</td>
+        <td>{{s.busRouteNm}}</td>
+        <td>{{s.length}} km</td>
+        <td>{{s.busRouteType}}</td>
+        <td>{{s.stBegin}}</td>
+        <td>{{s.stEnd}}</td>
+        <td>{{s.term}}분</td>
+        <td>{{s.firstBusTm}}</td>
+        <td>{{s.lastBusTm}}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>
