@@ -28,6 +28,13 @@ def route_stationList():
     return render_template('bus/routeList.html', stList=stList, arsId=arsId)
 
 
+@bp.route('/route-pathList', methods=['POST'])
+def route_pathList():
+    busRouteId = request.form['busRouteId']
+    stList:list = service.getRoutePathList(busRouteId=busRouteId)
+    return render_template('bus/pathList.html', stList=stList, busRouteId=busRouteId)
+
+
 @bp.route('/graph', methods=['POST','GET']) # 없으면 get, 둘다 사용하려면 둘다 표기
 def graph():
     img_path = '../static/graph/my_plot.png'

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 class Bus:
     def __init__(self, route_id=None, bus_name=None, st_station=None, ed_station=None, term=None, first_tm=None,
-                 last_tm=None, corp_name=None):
+                 last_tm=None, corp_name=None, length=None, routeType=None):
         self.route_id = route_id
         self.bus_name = bus_name
         self.st_station = st_station
@@ -13,6 +13,8 @@ class Bus:
         self.first_tm = first_tm
         self.last_tm = last_tm
         self.corp_name = corp_name
+        self.length = length
+        self.routeType = routeType
 
     # to_String (Debug)
     # def __str__
@@ -46,6 +48,15 @@ class Station2:
         self.lastBusTmLow = lastBusTmLow
 
 
+class RoutePath:
+    def __init__(self, no=None, gpsX=None, gpsY=None, posX=None, posY=None):
+        self.no = no
+        self.gpsX = gpsX
+        self.gpsY = gpsY
+        self.posX = posX
+        self.posY = posY
+
+
 # 서비스 : 기능구현, 멤버변수, 메서드
 class BusService:
 
@@ -68,16 +79,49 @@ class BusService:
         if code == '0':
             bus_id = root.find('busRouteId').get_text()
             bus_name = root.find('busRouteNm').get_text()
+            length = root.find('length').get_text()
+            routeType = root.find('routeType').get_text()
+            if routeType == '1':
+                routeType = '공항'
+            elif routeType == '2':
+                routeType = '마을'
+            elif routeType == '3':
+                routeType = '간선'
+            elif routeType == '4':
+                routeType = '지선'
+            elif routeType == '5':
+                routeType = '순환'
+            elif routeType == '6':
+                routeType = '광역'
+            elif routeType == '7':
+                routeType = '인천'
+            elif routeType == '8':
+                routeType = '경기'
+            elif routeType == '9':
+                routeType = '폐지'
+            elif routeType == '0':
+                routeType = '공용'
+            else:
+                routeType = '기타'
             edstation = root.find('edStationNm').get_text()
             ststation = root.find('stStationNm').get_text()
-            firsttm = root.find('firstBusTm').get_text()
-            lasttm = root.find('lastBusTm').get_text()
+            # firsttm = root.find('firstBusTm').get_text()
+            tm = root.find('firstBusTm').get_text()
+            hour = tm[8:10]
+            min = tm[10:12]
+            firsttm = hour + ':' + min
+
+            # lasttm = root.find('lastBusTm').get_text()
+            tm = root.find('lastBusTm').get_text()
+            hour = tm[8:10]
+            min = tm[10:12]
+            lasttm = hour + ':' + min
+
             term = root.find('term').get_text()
             corp_name = root.find('corpNm').get_text()
 
             return Bus(route_id=bus_id, bus_name=bus_name, st_station=ststation, ed_station=edstation, term=term,
-                       first_tm=firsttm,
-                       last_tm=lasttm, corp_name=corp_name)
+                       first_tm=firsttm, length=length, routeType=routeType, last_tm=lasttm, corp_name=corp_name)
 
         else:
             print('오류발생 code:', code)
@@ -100,9 +144,7 @@ class BusService:
                 lastTm = item.find('lastTm').get_text()
                 gpsX = item.find('gpsX').get_text()
                 gpsY = item.find('gpsY').get_text()
-                stations.append(
-                    Station(seq=seq, arsId=arsId, stationNm=stationNm, beginTm=beginTm, lastTm=lastTm, gpsX=gpsX,
-                            gpsY=gpsY))
+                stations.append(Station(seq=seq, arsId=arsId, stationNm=stationNm, beginTm=beginTm, lastTm=lastTm, gpsX=gpsX, gpsY=gpsY))
         else:
             print('오류발생 code:', code)
 
@@ -181,3 +223,25 @@ class BusService:
             print('오류발생 code:', code)
 
         return station
+
+    def getRoutePathList(self, busRouteId: str):
+        cmd = '/getRoutePath'
+        url = self.base_url + cmd + '?ServiceKey=' + self.api_key + '&busRouteId=' + busRouteId
+        html = requests.get(url).text
+        root = BeautifulSoup(html, 'lxml-xml')  # pip install lxml
+        code = root.find('headerCd').text
+        stations = []
+        if code == '0':
+            # items = root.select('itemList')
+            items = root.find_all('itemList')
+            for item in items:
+                no = item.find('no').get_text()
+                gpsX = item.find('gpsX').get_text()
+                gpsY = item.find('gpsY').get_text()
+                posX = item.find('posX').get_text()
+                posY = item.find('posY').get_text()
+                stations.append(RoutePath(no=no, gpsX=gpsX, gpsY=gpsY, posX=posX, posY=posY))
+        else:
+            print('오류발생 code:', code)
+
+        return stations

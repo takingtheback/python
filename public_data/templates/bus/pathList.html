@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>{{busRouteId}}의 노선의 지도상 경로</h3>
+<table border="1">
+    <tr><th>순번</th><th>좌표X(WGS84)</th><th>좌표Y(WGS84)</th><th>좌표X(GRS80)</th><th>좌표Y(GRS80)</th></tr>
+{% for s in stList%}
+    <tr>
+        <td>{{s.no}}</td>
+        <td>{{s.gpsX}}</td>
+        <td>{{s.gpsY}}</td>
+        <td>{{s.posX}}</td>
+        <td>{{s.posY}}</td>
+    </tr>
+{% endfor %}
+</table>
+<a href="/">되돌아가기</a>
+</body>
+</html>
