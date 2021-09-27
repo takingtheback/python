@@ -35,6 +35,29 @@ def route_pathList():
     return render_template('bus/pathList.html', stList=stList, busRouteId=busRouteId)
 
 
+@bp.route('/IDList')
+def IDList():
+    stList:list = service.IDList()
+    return render_template('bus/IDList.html', stList=stList)
+
+
+@bp.route('/lineNameList')
+def lineNameList():
+    stList:list = service.lineNameList()
+    return render_template('bus/lineNameList.html', stList=stList)
+
+
+@bp.route('/stationIDList')
+def stationIDList():
+    stList:list = service.stationIDList()
+    return render_template('bus/stationIDList.html', stList=stList)
+
+
+@bp.route('/stationNameList')
+def stationNameList():
+    stList:list = service.stationNameList()
+    return render_template('bus/stationNameList.html', stList=stList)
+
 @bp.route('/graph', methods=['POST','GET']) # 없으면 get, 둘다 사용하려면 둘다 표기
 def graph():
     img_path = '../static/graph/my_plot.png'
@@ -46,3 +69,12 @@ def graph():
     fig.savefig(img_path)#fig 객체를 파라메터로 지정한 패스의 파일로 저장
     img_path = '/' + img_path
     return render_template('graph.html', img_path=img_path)
+
+
+@bp.route('/route-time', methods=['POST'])
+def route_time():
+    arsId = request.form['arsId']
+    busRouteId = request.form['busRouteId']
+    times:list = service.getBustimeByStationList(arsId=arsId, busRouteId=busRouteId)
+    return render_template('bus/five.html', times=times, arsId=arsId, busRouteId=busRouteId)
+

@@ -1,5 +1,7 @@
 import requests
+import pandas as pd
 from bs4 import BeautifulSoup
+
 
 
 class Bus:
@@ -55,6 +57,20 @@ class RoutePath:
         self.gpsY = gpsY
         self.posX = posX
         self.posY = posY
+
+
+class IDList:
+    def __init__(self, id=None):
+        self.id = id
+
+class Station5:
+    def __init__(self, arsId=None, stationNm=None, busRouteId=None, busRouteNm=None, firstBusTm=None, lastBusTm=None):
+        self.arsId=arsId
+        self.stationNm=stationNm
+        self.busRouteId=busRouteId
+        self.busRouteNm=busRouteNm
+        self.firstBusTm=firstBusTm
+        self.lastBusTm=lastBusTm
 
 
 # 서비스 : 기능구현, 멤버변수, 메서드
@@ -245,3 +261,62 @@ class BusService:
             print('오류발생 code:', code)
 
         return stations
+
+    def IDList(self):
+        df = pd.read_excel('bus_station_info.xlsx', engine='openpyxl')
+        data = df[['노선ID']].drop_duplicates(subset=None, keep='first', inplace=False, ignore_index=False)
+        id = data.values
+        list = []
+        for i in id:
+            list.append(IDList(id=i))
+        return list
+
+    def lineNameList(self):
+        df = pd.read_excel('bus_station_info.xlsx', engine='openpyxl')
+        data = df[['노선명']].drop_duplicates(subset=None, keep='first', inplace=False, ignore_index=False)
+        id = data.values
+        list = []
+        for i in id:
+            list.append(IDList(id=i))
+        return list
+
+    def stationIDList(self):
+        df = pd.read_excel('bus_station_info.xlsx', engine='openpyxl')
+        data = df[['ARS-ID']].drop_duplicates(subset=None, keep='first', inplace=False, ignore_index=False)
+        id = data.values
+        list = []
+        for i in id:
+            list.append(IDList(id=i))
+        return list
+
+    def stationNameList(self):
+        df = pd.read_excel('bus_station_info.xlsx', engine='openpyxl')
+        data = df[['정류소명']].drop_duplicates(subset=None, keep='first', inplace=False, ignore_index=False)
+        id = data.values
+        list = []
+        for i in id:
+            list.append(IDList(id=i))
+        return list
+
+    def getBustimeByStationList(self, arsId: str, busRouteId: str):  # 5
+        cmd = '/getBustimeByStation'
+        url = self.station_url + cmd + '?ServiceKey=' + self.api_key + '&arsId=' + arsId + '&busRouteId=' + busRouteId
+        html = requests.get(url).text
+        root = BeautifulSoup(html, 'lxml-xml')  # pip install lxml
+        code = root.find('headerCd').text
+        times = []
+        if code == '0':
+            items = root.find_all('itemList')
+            for item in items:
+                arsId = item.find('arsId').text
+                stationNm = item.find('stationNm').text
+                busRouteId = item.find('busRouteId').text
+                busRouteNm = item.find('busRouteNm').text
+                firstBusTm = item.find('firstBusTm').text
+                lastBusTm = item.find('lastBusTm').text
+                times.append(Station5(arsId=arsId, stationNm=stationNm, busRouteId=busRouteId, busRouteNm=busRouteNm,
+                                      firstBusTm=firstBusTm, lastBusTm=lastBusTm))
+        else:
+            print('오류발생 code:', code)
+
+        return times
