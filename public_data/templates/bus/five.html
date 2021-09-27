@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>정류소 별 노선첫차/막차 예정시간 목록조회</h3>
+<table border="1">
+    <tr><th>고유번호</th><th>정류소명</th><th>노선ID</th><th>노선명</th><th>금일첫차시간</th><th>금일막차시간</th></tr>
+{% for t in times %}
+    <tr>
+        <td>{{t.arsId}}</td>
+        <td>{{t.stationNm}}</td>
+        <td>{{t.busRouteId}}</td>
+        <td>{{t.busRouteNm}}</td>
+        <td>{{t.firstBusTm}}</td>
+        <td>{{t.lastBusTm}}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
