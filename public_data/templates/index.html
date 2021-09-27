@@ -6,9 +6,16 @@
 </head>
 <body>
 <h3>버스 정보 앱</h3>
+<hr>
+<h4>검색 가능한 리스트</h4>
+<a href="/bus/IDList">노선ID</a>
+<a href="/bus/lineNameList">노선명</a>
+<a href="/bus/stationIDList">정류소ID</a>
+<a href="/bus/stationNameList">정류소명</a>
+<br>
 <form action="/bus/route-path" method="post">
     경유지 검색 <br>
-    확인할 라우트 아이디:<input type="text" name="routeid">
+    확인할 노선 아이디:<input type="text" name="routeid">
     <input type="submit" value="검색">
 </form>
 <br>
@@ -22,15 +29,21 @@
 <br>
 <form action="/bus/route-info" method="post">
     8 노선 기본정보 조회 <br>
-    확인할 라우트 아이디:<input type="text" name="routeid">
+    확인할 노선 아이디:<input type="text" name="routeid">
     <input type="submit" value="검색">
 </form>
 <br>
 <form action="/bus/route-pathList" method="post">
     9 노선의 지도상 경로 <br>
-    확인할 라우트 아이디:<input type="text" name="busRouteId">
+    확인할 노선 아이디:<input type="text" name="busRouteId">
     <input type="submit" value="검색">
 </form>
 <br>
+<form action="/bus/route-time" method="post">
+    5. 정류소 별 노선첫차/막차 예정시간 목록조회<br/>
+    정류소고유번호:<input type="text" name="arsId">
+    노선ID:<input type="text" name="busRouteId">
+    <input type="submit" value="검색">
+</form>
 </body>
 </html>
