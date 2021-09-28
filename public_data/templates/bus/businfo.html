@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>노선정보</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.js') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/jh.css')}}">
 </head>
-<body>
-<h3>노선 정보</h3>
-<table border="1">
+<body style="width:80%; text-align:center; margin-left:auto; margin-right:auto;">
+<h3 style="display:inline-block; text-align:center;"><b>{{bus.route_id}}</b> 노선 정보</h3>
+<table id="example-table-1" width="100%" border="1" class="table table-bordered table-hover text-center">
     <tr><th>노선 ID</th><td>{{bus.route_id}}</td></tr>
     <tr><th>노선명</th><td>{{bus.bus_name}}</td></tr>
     <tr><th>노선 길이</th><td>{{bus.length}} km</td></tr>

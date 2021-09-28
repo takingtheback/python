@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>경유노선목록</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.js') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/jh.css')}}">
 </head>
-<body>
-<h3>{{arsId}}의 경유노선목록</h3>
-<table border="1">
+<body style="width:80%; text-align:center; margin-left:auto; margin-right:auto;">
+<h3 style="display:inline-block; text-align:center;"><b>{{arsId}}</b> 경유노선목록</h3>
+<table id="example-table-1" width="100%" border="1" class="table table-bordered table-hover text-center">
+
     <tr>
         <th>노선ID</th><th>노선명</th><th>노선길이</th><th>노선유형</th><th>기점</th><th>종점</th><th>배차간격</th>
         <th>금일첫차시간</th><th>금일막차시간</th>
@@ -25,6 +29,7 @@
     </tr>
 {% endfor %}
 </table>
+
 <a href="/">되돌아가기</a>
 </body>
 </html>

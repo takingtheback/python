@@ -24,7 +24,7 @@ def route_path():
 @bp.route('/route-stationList', methods=['POST'])
 def route_stationList():
     arsId = request.form['arsId']
-    stList:list = service.getRouteByStationList(arsId=arsId)
+    stList:list= service.getRouteByStationList(arsId=arsId)
     return render_template('bus/routeList.html', stList=stList, arsId=arsId)
 
 

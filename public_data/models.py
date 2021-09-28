@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-
+from flask import render_template
 
 
 class Bus:
@@ -213,7 +213,7 @@ class BusService:
                 min = tm[10:12]
                 firstBusTm = hour + ':' + min
 
-                # lastBusTm = item.find('lastBusTm').get_text()
+                # lastBusTm = item.find('lastBusTm').get_text() 2109280945300000
                 tm = item.find('lastBusTm').get_text()
                 hour = tm[8:10]
                 min = tm[10:12]
@@ -236,8 +236,25 @@ class BusService:
                              stBegin=stBegin, stEnd=stEnd, term=term, nextBus=nextBus, firstBusTm=firstBusTm,
                              lastBusTm=lastBusTm, firstBusTmLow=firstBusTmLow, lastBusTmLow=lastBusTmLow))
         else:
-            print('오류발생 code:', code)
-
+            if code == '1':
+                msg = '시스템 오류가 발생하였습니다'
+            elif code == '2':
+                msg = '잘못된 쿼리 요청입니다. 쿼리 변수가 정확한지 확인하세요.'
+            elif code == '3':
+                msg = '정류소를 찾을 수 없습니다'
+            elif code == '4':
+                msg = '노선을 찾을 수 없습니다.'
+            elif code == '5':
+                msg = '잘못된 위치로 요청을 하였습니다. 위/경도 좌표가 정확한지 확인하세요'
+            elif code == '6':
+                msg = '실시간 정보를 읽을 수 없습니다. 잠시 후 다시 시도하세요'
+            elif code == '7':
+                msg = '경로 검색 결과가 존재하지 않습니다.'
+            elif code == '8':
+                msg = '운행 종료되었습니다.'
+            else:
+                msg = '알 수 없는 오류입니다.'
+            print(msg)
         return station
 
     def getRoutePathList(self, busRouteId: str):

@@ -2,48 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>버스정보앱</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.js') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/jh.css')}}">
 </head>
-<body>
-<h3>버스 정보 앱</h3>
+<body style="width:80%; text-align:center; margin-left:auto; margin-right:auto;">
+<h3 style="display:inline-block; text-align:center;">버스 정보 앱</h3>
 <hr>
-<h4>검색 가능한 리스트</h4>
-<a href="/bus/IDList">노선ID</a>
-<a href="/bus/lineNameList">노선명</a>
-<a href="/bus/stationIDList">정류소ID</a>
-<a href="/bus/stationNameList">정류소명</a>
-<br>
-<form action="/bus/route-path" method="post">
-    경유지 검색 <br>
-    확인할 노선 아이디:<input type="text" name="routeid">
-    <input type="submit" value="검색">
-</form>
-<br>
-<a href="/bus/graph">그래프보기</a>
+<div class="row">
 <br>
 <form action="/bus/route-stationList" method="post">
     2 경유노선목록 조회 <br>
-    정류소 고유번호:<input type="text" name="arsId">
-    <input type="submit" value="검색">
-</form>
-<br>
-<form action="/bus/route-info" method="post">
-    8 노선 기본정보 조회 <br>
-    확인할 노선 아이디:<input type="text" name="routeid">
-    <input type="submit" value="검색">
-</form>
-<br>
-<form action="/bus/route-pathList" method="post">
-    9 노선의 지도상 경로 <br>
-    확인할 노선 아이디:<input type="text" name="busRouteId">
+    <input type="text" name="arsId" placeholder="정류소 고유번호">
     <input type="submit" value="검색">
 </form>
 <br>
 <form action="/bus/route-time" method="post">
     5. 정류소 별 노선첫차/막차 예정시간 목록조회<br/>
-    정류소고유번호:<input type="text" name="arsId">
-    노선ID:<input type="text" name="busRouteId">
+    <input type="text" name="arsId" placeholder="정류소고유번호">
+    <input type="text" name="busRouteId" placeholder="노선ID">
     <input type="submit" value="검색">
 </form>
+<br>
+<form action="/bus/route-info" method="post">
+    8 노선 기본정보 조회 <br>
+    <input type="text" name="routeid" placeholder="확인할 노선 아이디">
+    <input type="submit" value="검색">
+</form>
+<br>
+<form action="/bus/route-pathList" method="post">
+    9 노선의 지도상 경로 <br>
+    <input type="text" name="busRouteId" placeholder="확인할 노선 아이디">
+    <input type="submit" value="검색">
+</form>
+</div>
+<br>
+
+<hr>
+<h4>모든 리스트</h4>
+<a href="/bus/IDList">노선ID</a>
+<a href="/bus/lineNameList">노선명</a>
+<a href="/bus/stationIDList">정류소ID</a>
+<a href="/bus/stationNameList">정류소명</a>
+<br>
 </body>
 </html>

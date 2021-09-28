@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from public_data.routes import routes as r
+import threading
 
 app = Flask(__name__)
 
@@ -11,4 +12,4 @@ def root():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run()#flask 서버 실행
+    threading.Timer(60, app.run(port=5000)).start()

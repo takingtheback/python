@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>경유정류소</title>
 </head>
-<body>
-<h3>{{routeid}}의 경유 정류소</h3>
-<table border="1">
+<body style="width:80%; text-align:center; margin-left:auto; margin-right:auto;">
+<h3 style="display:inline-block; text-align:center;"><b>{{routeid}}</b> 경유 정류소</h3>
+<table id="example-table-1" width="100%" border="1" class="table table-bordered table-hover text-center">
     <tr><th>순번</th><th>정류소 고유번호</th><th>정류소명</th><th>첫차시간</th><th>막차시간</th><th>위치X</th><th>위치Y</th></tr>
 {% for s in stList%}
     <tr>
@@ -20,5 +20,6 @@
     </tr>
 {% endfor %}
 </table>
+<a href="/">되돌아가기</a>
 </body>
 </html>
