@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>결과 2번 클래스 저장방식</title>
+</head>
+<body>
+<table border="1">
+
+    <tr>
+        <th>과국명</th>
+        <th>과명</th>
+        <th>국명</th>
+        <th>도감번호</th>
+        <th>속국명</th>
+        <th>속명</th>
+    </tr>
+    {% for data in List %}
+    <tr>
+        <td>{{data.familyKorNm}}</td>
+        <td>{{data.familyNm}}</td>
+        <td>{{data.fngsGnrlNm}}</td>
+        <td>{{data.fngsPilbkNo}}</td>
+        <td>{{data.genusKorNm}}</td>
+        <td>{{data.genusNm}}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

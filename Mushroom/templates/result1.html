@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>결과 1번 리스트</title>
+</head>
+<body>
+<table border="1">
+
+    <tr>
+        <th>과국명</th>
+        <th>과명</th>
+        <th>국명</th>
+        <th>도감번호</th>
+        <th>속국명</th>
+        <th>속명</th>
+    </tr>
+    {% for data in List %}
+    <tr>
+        <td>{{data[0]}}</td>
+        <td>{{data[1]}}</td>
+        <td>{{data[2]}}</td>
+        <td>{{data[3]}}</td>
+        <td>{{data[4]}}</td>
+        <td>{{data[5]}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
